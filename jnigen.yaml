@@ -1,0 +1,18 @@
+android_sdk_config:
+  add_gradle_deps: true
+  add_gradle_sources: true
+  android_example: "example/"
+
+output:
+  dart:
+    path: 'lib/vibrate/'
+    #path: 'lib/flutter_vibrate_jnigen.dart'
+    #structure: single_file
+
+classes:
+  - 'android.os.Build'
+  - 'android.content.Context'
+  - 'android.app.Activity'
+  - 'android.os.Vibrator'
+  - 'android.os.VibrationEffect'
+  - 'android.view.HapticFeedbackConstants'

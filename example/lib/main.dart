@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_vibrate/flutter_vibrate.dart';
+import 'package:flutter_vibrate/flutter_vibrate_jnigen.dart';
+import 'flutter_vibrate.dart';
+import 'package:jni/jni.dart';
 
 void main() => runApp(const MyApp());
 
@@ -12,6 +14,8 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   bool _canVibrate = true;
+  Vibrate vibrator = Vibrate();
+
   final Iterable<Duration> pauses = [
     const Duration(milliseconds: 500),
     const Duration(milliseconds: 1000),
@@ -21,11 +25,14 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
+    vibrator.init();
+
     _init();
   }
 
   Future<void> _init() async {
-    bool canVibrate = await Vibrate.canVibrate;
+
+    bool canVibrate = Vibrate.canVibrate;
     setState(() {
       _canVibrate = canVibrate;
       _canVibrate
@@ -45,7 +52,7 @@ class _MyAppState extends State<MyApp> {
               title: const Text('Vibrate'),
               leading: const Icon(Icons.vibration, color: Colors.teal),
               onTap: () {
-                if (_canVibrate) Vibrate.vibrate;
+                if (_canVibrate) vibrator.defaultVibration();
               },
             ),
             ListTile(
@@ -53,7 +60,7 @@ class _MyAppState extends State<MyApp> {
               leading: const Icon(Icons.vibration, color: Colors.brown),
               onTap: () {
                 if (_canVibrate) {
-                  Vibrate.vibrateWithPauses(pauses);
+                  vibrator.vibrateWithPauses(pauses);
                 }
               },
             ),
@@ -63,7 +70,7 @@ class _MyAppState extends State<MyApp> {
               leading: const Icon(Icons.tap_and_play, color: Colors.orange),
               onTap: () {
                 if (_canVibrate) {
-                  Vibrate.feedback(FeedbackType.impact);
+                  vibrator.feedback(FeedbackType.impact);
                 }
               },
             ),
@@ -72,7 +79,7 @@ class _MyAppState extends State<MyApp> {
               leading: const Icon(Icons.select_all, color: Colors.blue),
               onTap: () {
                 if (_canVibrate) {
-                  Vibrate.feedback(FeedbackType.selection);
+                  vibrator.feedback(FeedbackType.selection);
                 }
               },
             ),
@@ -81,7 +88,7 @@ class _MyAppState extends State<MyApp> {
               leading: const Icon(Icons.check, color: Colors.green),
               onTap: () {
                 if (_canVibrate) {
-                  Vibrate.feedback(FeedbackType.success);
+                  vibrator.feedback(FeedbackType.success);
                 }
               },
             ),
@@ -90,7 +97,7 @@ class _MyAppState extends State<MyApp> {
               leading: const Icon(Icons.warning, color: Colors.red),
               onTap: () {
                 if (_canVibrate) {
-                  Vibrate.feedback(FeedbackType.warning);
+                  vibrator.feedback(FeedbackType.warning);
                 }
               },
             ),
@@ -99,7 +106,7 @@ class _MyAppState extends State<MyApp> {
               leading: const Icon(Icons.error, color: Colors.red),
               onTap: () {
                 if (_canVibrate) {
-                  Vibrate.feedback(FeedbackType.error);
+                  vibrator.feedback(FeedbackType.error);
                 }
               },
             ),
@@ -110,7 +117,7 @@ class _MyAppState extends State<MyApp> {
                   const Icon(Icons.notification_important, color: Colors.red),
               onTap: () {
                 if (_canVibrate) {
-                  Vibrate.feedback(FeedbackType.heavy);
+                  vibrator.feedback(FeedbackType.heavy);
                 }
               },
             ),
@@ -120,7 +127,7 @@ class _MyAppState extends State<MyApp> {
                   const Icon(Icons.notification_important, color: Colors.green),
               onTap: () {
                 if (_canVibrate) {
-                  Vibrate.feedback(FeedbackType.medium);
+                  vibrator.feedback(FeedbackType.medium);
                 }
               },
             ),
@@ -130,7 +137,7 @@ class _MyAppState extends State<MyApp> {
                   Icon(Icons.notification_important, color: Colors.yellow[700]),
               onTap: () {
                 if (_canVibrate) {
-                  Vibrate.feedback(FeedbackType.light);
+                  vibrator.feedback(FeedbackType.light);
                 }
               },
             ),
